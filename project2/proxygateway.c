@@ -71,35 +71,35 @@ int main(int argc, char *argv[])
 			while(1)
 			{
 				recvmsgtype(clnt_sock, &msgtype);
-				switch(msgtype)									//receive message
+				switch(msgtype)									//receive message from client
 				{			
-					case auth_req_msg:							//receive message type1
+					case auth_req_msg:							//receive message type1 from client
 						recvClntmessage1(clnt_sock, &auth_req);
 						printf("Client Request Msg -> %s, %s\n", auth_req.user_id, auth_req.password);
-						sendmsgtype(sock, &msgtype);
+						sendmsgtype(sock, &msgtype);			//send message type1 to server
 						sendClntmessage1(sock, &auth_req);
     					break;	
-					case sql_req_msg:							//receive message type3
+					case sql_req_msg:							//receive message type3 from client
 						recvClntmessage3(clnt_sock, &sql_req);
 						printf("Client Request Msg -> %s\n", sql_req.sql_text);
-						sendmsgtype(sock, &msgtype);
+						sendmsgtype(sock, &msgtype);			//send message type3 to server
 						sendClntmessage3(sock, &sql_req);
 						break;
-					case close_req_msg:							//receive message type5
+					case close_req_msg:							//receive message type5 from client
 						recvClntmessage5(clnt_sock, &close_req);
-						sendmsgtype(sock, &msgtype);
+						sendmsgtype(sock, &msgtype);			//send message type3 to server
 						sendClntmessage5(sock, &close_req);
 						break;
 				}
 			
 				recvmsgtype(sock, &msgtype);
-				switch(msgtype)				//receive protocal
+				switch(msgtype)									//receive message from server
 				{
-					case auth_req_msg:
-					case auth_res_msg:						//msgtype2
-						recvServmessage2(sock, &auth_res);
+					case auth_req_msg:					
+					case auth_res_msg:							
+						recvServmessage2(sock, &auth_res);		//receive message type2 from server
 						printf("Server Response Msg -> %s", auth_res.rtn_msg);
-						sendmsgtype(clnt_sock, &msgtype);
+						sendmsgtype(clnt_sock, &msgtype);		//send message type2 to client
 						sendServmessage2(clnt_sock, &auth_res);
 						if(msgtype==auth_req_msg) {	
 						close(sock);
@@ -107,17 +107,17 @@ int main(int argc, char *argv[])
 						exit(1);
 						}
 						break;
-					case sql_res_msg:						//msgtype4
-						recvServmessage4(sock, &sql_res);
+					case sql_res_msg:							
+						recvServmessage4(sock, &sql_res);		//receive message type4 from server
 						printf("Server Response Msg -> %s", sql_res.rtn_data);
-						sendmsgtype(clnt_sock, &msgtype);
+						sendmsgtype(clnt_sock, &msgtype);		//send message type4 to client
 						sendServmessage4(clnt_sock, &sql_res);
 						break;		
-					case close_res_msg:						//msgtype6
-						recvServmessage6(sock,  &close_res);
+					case close_res_msg:							
+						recvServmessage6(sock,  &close_res);	//receive message type6 from server
 						printf("Server Response Msg -> %s", close_res.rtn_msg);
 						close(sock);
-						sendmsgtype(clnt_sock, &msgtype);
+						sendmsgtype(clnt_sock, &msgtype);		//send message type6 to client
 						sendServmessage6(clnt_sock, &close_res);
 						return 0;
 						break;
