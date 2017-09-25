@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 	msgtype=auth_req_msg;
 	while(1)
 	{
-		switch(msgtype)					//send protocal
+		switch(msgtype)									//send protocal
 		{
 			case auth_req_msg:							//msgtype1
 				printf("ID : ");
@@ -74,10 +74,10 @@ int main(int argc, char *argv[])
 
 		recvmsgtype(sock, &msgtype);
 
-		switch(msgtype)				//receive protocal
+		switch(msgtype)									//receive protocal
 		{
 			case auth_req_msg:
-			case auth_res_msg:						//msgtype2
+			case auth_res_msg:							//msgtype2
 				recvServmessage2(sock, &auth_res);
 				printf("%s", auth_res.rtn_msg);
 				if(msgtype==auth_req_msg)
@@ -90,12 +90,12 @@ int main(int argc, char *argv[])
 					msgtype=sql_req_msg;
 				getchar();
 				break;
-			case sql_res_msg:						//msgtype4
+			case sql_res_msg:							//msgtype4
 				recvServmessage4(sock, &sql_res);
 				printf("%s", sql_res.rtn_data);
 				msgtype=sql_req_msg;
 				break;		
-			case close_res_msg:						//msgtype6
+			case close_res_msg:							//msgtype6
 				recvServmessage6(sock,  &close_res);
 				printf("%s", close_res.rtn_msg);
 				close(sock);
