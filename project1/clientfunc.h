@@ -3,6 +3,7 @@
 //  tcp
 //
 //  Created by hwangyunho on 2017. 9. 18.
+//  last modified by hwangyunho on 2017. 9. 25.
 //  Copyright © 2017년 hwangyunho. All rights reserved.
 //
 
@@ -52,32 +53,32 @@ void setClntmessage3(UB2 msgtype, UB4 sql_len, char *sql_text, dgt_sql_req_msg *
 	else
 		sql_req->sql_type=sqlerror;
 }
-void sendClntmessage3(int sock, dgt_sql_req_msg *sql_req)			//send msgtype3
+void sendClntmessage3(int sock, dgt_sql_req_msg *sql_req)					//send msgtype3
 {
 	checklen=send(sock, sql_req, sizeof(*sql_req),0);
 	if(checklen==-1)
 		error_handling("send() error");
 }
 
-void recvServmessage4(int sock, dgt_sql_res_msg *sql_res)			//receive msgtype4
+void recvServmessage4(int sock, dgt_sql_res_msg *sql_res)					//receive msgtype4
 {
 	checklen=recv(sock, sql_res,sizeof(*sql_res),0);
 	if(checklen==-1)
 		error_handling("recv() error");
 }
 
-void setClntmessage5(UB2 msgtype, dgt_close_req_msg *close_req)		//set msgtype5
+void setClntmessage5(UB2 msgtype, dgt_close_req_msg *close_req)					//set msgtype5
 {
 	close_req->msg_type=close_req_msg;
 }
-void sendClntmessage5(int sock, dgt_close_req_msg *close_req)		//send msgtype5
+void sendClntmessage5(int sock, dgt_close_req_msg *close_req)					//send msgtype5
 {
 	checklen=send(sock, close_req, sizeof(*close_req),0);
 	if(checklen==-1)
 		error_handling("send() error");
 }
 
-void recvServmessage6(int sock, dgt_close_res_msg *close_res)		//receive msgtype6    
+void recvServmessage6(int sock, dgt_close_res_msg *close_res)					//receive msgtype6    
 {
 	checklen=recv(sock, close_res,sizeof(*close_res),0);
 	if(checklen==-1)
