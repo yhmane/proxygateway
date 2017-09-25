@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 		if(clnt_sock==-1)
 			continue;
 		else
-			puts("Connected............. ");
+			puts("Connected............ ");
 		
 		pid=fork();
 		if(pid==-1) {
