@@ -83,5 +83,4 @@ void recvServmessage6(int sock, dgt_close_res_msg *close_res)		//receive msgtype
 	if(checklen==-1)
 		error_handling("recv() error");
 }
-
 #endif
