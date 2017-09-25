@@ -11,13 +11,13 @@
 #include "clientfunc.h"
 int main(int argc, char *argv[])
 {	
-	char id[33], password[33];
+	char id[USERID], password[PASSWORD];
 	int proxy_sock, clnt_sock, sock, state;
 	struct sockaddr_in proxy_adr, clnt_adr, serv_adr;
 	pid_t pid;
 	struct sigaction act;
 	socklen_t adr_sz;
-	UB2 msgtype=0;
+	UB2 msgtype=EMPTY_MSG;
 
 	dgt_auth_req_msg auth_req;
 	dgt_auth_res_msg auth_res;
@@ -71,50 +71,64 @@ int main(int argc, char *argv[])
 			while(1)
 			{
 				recvmsgtype(clnt_sock, &msgtype);
+				if(msgtype==EMPTY_MSG) {
+					close(clnt_sock);
+					sendmsgtype(sock, &msgtype);			//send message type1 to server
+					sendClntmessage1(sock, &auth_req);
+					exit(1);
+				}
+				if(msgtype==AUTH_RES_MSG) {
+					close(clnt_sock);
+					sendmsgtype(sock, &msgtype);			//send message type1 to server
+					sendClntmessage3(sock, &sql_req);
+					exit(1);
+				}
 				switch(msgtype)							//receive message from client
 				{			
-					case auth_req_msg:					//receive message type1 from client
+					case AUTH_REQ_MSG:					//receive message type1 from client
 						recvClntmessage1(clnt_sock, &auth_req);
 						printf("Client Request Msg -> %s, %s\n", auth_req.user_id, auth_req.password);
 						sendmsgtype(sock, &msgtype);			//send message type1 to server
 						sendClntmessage1(sock, &auth_req);
 						break;	
-					case sql_req_msg:					//receive message type3 from client
+					case SQL_REQ_MSG:					//receive message type3 from client
 						recvClntmessage3(clnt_sock, &sql_req);
 						printf("Client Request Msg -> %s\n", sql_req.sql_text);
 						sendmsgtype(sock, &msgtype);			//send message type3 to server
 						sendClntmessage3(sock, &sql_req);
 						break;
-					case close_req_msg:					//receive message type5 from client
+					case CLOSE_REQ_MSG:					//receive message type5 from client
 						recvClntmessage5(clnt_sock, &close_req);
 						sendmsgtype(sock, &msgtype);			//send message type3 to server
 						sendClntmessage5(sock, &close_req);
 						break;
 				}
-			
 				recvmsgtype(sock, &msgtype);
+				if(msgtype==AUTH_REQ_MSG || msgtype==SQL_REQ_MSG)
+					return 0;
 				switch(msgtype)							//receive message from server
 				{
-					case auth_req_msg:					
-					case auth_res_msg:							
+					case AUTH_REQ_MSG:					
+					case AUTH_RES_MSG:							
 						recvServmessage2(sock, &auth_res);		//receive message type2 from server
 						printf("Server Response Msg -> %s", auth_res.rtn_msg);
 						sendmsgtype(clnt_sock, &msgtype);		//send message type2 to client
 						sendServmessage2(clnt_sock, &auth_res);
-						if(msgtype==auth_req_msg) {	
+						if(msgtype==AUTH_REQ_MSG) {	
 						close(sock);
 						puts("Server Response Msg -> Server Connection closed");
 						exit(1);
 						}
 						break;
-					case sql_res_msg:							
+					case SQL_RES_MSG:							
 						recvServmessage4(sock, &sql_res);		//receive message type4 from server
 						printf("Server Response Msg -> %s", sql_res.rtn_data);
 						sendmsgtype(clnt_sock, &msgtype);		//send message type4 to client
 						sendServmessage4(clnt_sock, &sql_res);
 						break;		
-					case close_res_msg:							
+					case CLOSE_RES_MSG:							
 						recvServmessage6(sock,  &close_res);		//receive message type6 from server
+						printf("Client Request Msg -> exit;\n");
 						printf("Server Response Msg -> %s", close_res.rtn_msg);
 						close(sock);
 						sendmsgtype(clnt_sock, &msgtype);		//send message type6 to client
@@ -122,7 +136,6 @@ int main(int argc, char *argv[])
 						return 0;
 						break;
 				}
-
 			}
 		}
 		else

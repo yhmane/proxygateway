@@ -30,8 +30,8 @@ void recvClntmessage1(int clnt_sock, dgt_auth_req_msg *auth_req)                
 
 void setServmessage2(UB2 msgtype, dgt_auth_res_msg *auth_res)                                   //set msgtype2                   
 {
-        char r2_msg[257]="================================\nConnection is Successful.\nServer IP :192.168.10.111\nServer Port : 1521\n================================\n";
-        auth_res->msg_type=auth_res_msg ;
+        char r2_msg[RTN_MSG]="================================\nConnection is Successful.\nServer IP :192.168.10.111\nServer Port : 1521\n================================\n";
+        auth_res->msg_type=AUTH_RES_MSG ;
         auth_res->rtn_len=strlen(r2_msg);
         memcpy(auth_res->rtn_msg, r2_msg, strlen(r2_msg)+1);
 }
@@ -55,19 +55,19 @@ void setServmessage4(UB2 msgtype, dgt_sql_req_msg *sql_req, dgt_sql_res_msg *sql
         char sql2[]="Result : delete sql is successful.\n";
         char sql3[]="Result : update sql is successful.\n";
         char sql4[]="Result : unsupported sql is executed.\n";
-        sql_res->msg_type=sql_res_msg;
+        sql_res->msg_type=SQL_RES_MSG;
         sql_res->sql_type=sql_req->sql_type;
         memset(sql_res->rtn_data, '\0', sizeof(sql_res->rtn_data));
     
-        if(sql_res->sql_type==select) {
+        if(sql_res->sql_type==SELECT) {
                 memcpy(sql_res->rtn_data, sql1, strlen(sql1));
                 sql_res->rtn_len=strlen(sql1);
         }
-        else if(sql_res->sql_type==delete) {
+        else if(sql_res->sql_type==DELETE) {
                 memcpy(sql_res->rtn_data, sql2, strlen(sql2));
                 sql_res->rtn_len=strlen(sql2);
         }
-        else if(sql_res->sql_type==update) {
+        else if(sql_res->sql_type==UPDATE) {
                 memcpy(sql_res->rtn_data, sql3, strlen(sql3));
                 sql_res->rtn_len=strlen(sql3);
         }
@@ -94,7 +94,7 @@ void recvClntmessage5(int clnt_sock, dgt_close_req_msg *close_req)              
 void setServmessage6(UB2 msgtype, dgt_close_res_msg *close_res)                                 //set msgtype6
 {
         char final[]="Server connection is closed\n";
-        close_res->msg_type=close_res_msg;
+        close_res->msg_type=CLOSE_RES_MSG;
         close_res->rtn_len=strlen(final);   
         memcpy(close_res->rtn_msg, final, strlen(final));
 }

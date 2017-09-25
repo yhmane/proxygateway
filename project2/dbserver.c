@@ -10,13 +10,13 @@
 #include "serverfunc.h"
 int main(int argc, char *argv[])
 {	
-	char id[33], password[33];
+	char id[USERID], password[PASSWORD];
 	int serv_sock, clnt_sock, state;
 	struct sockaddr_in serv_adr, clnt_adr;
 	pid_t pid;
 	struct sigaction act;
 	socklen_t adr_sz;
-	UB2 msgtype=0;
+	UB2 msgtype=EMPTY_MSG;
 
 	dgt_auth_req_msg auth_req;
 	dgt_auth_res_msg auth_res;
@@ -61,46 +61,53 @@ int main(int argc, char *argv[])
 		}
 		if(pid==0) {
 			close(serv_sock);
-			
 			while(1)
 			{
 				recvmsgtype(clnt_sock, &msgtype);
+				if(msgtype==EMPTY_MSG) {
+					close(clnt_sock);
+					exit(1);
+				}
+				if(msgtype==AUTH_RES_MSG) {
+					close(clnt_sock);
+					exit(1);
+				}
 				switch(msgtype)									//receive message
 				{			
-					case auth_req_msg:							//receive message type1
+					case AUTH_REQ_MSG:							//receive message type1
 						recvClntmessage1(clnt_sock, &auth_req);
 						strcpy(id, auth_req.user_id);
   					 	strcpy(password, auth_req.password);
 
    						if((strcmp(id,"scott")==0) && (strcmp(password, "tiger")==0))
-     					 	msgtype=auth_res_msg;
+     					 	msgtype=AUTH_RES_MSG;
 						else {
 							error_handling("access() error");
 							close(clnt_sock);
 							exit(1);
 						}
 						break;	
-					case sql_req_msg:							//receive message type3
+					case SQL_REQ_MSG:							//receive message type3
 						recvClntmessage3(clnt_sock, &sql_req);	
-						msgtype=sql_res_msg;
+						msgtype=SQL_RES_MSG;
 						break;
-					case close_req_msg:							//receive message type5
+					case CLOSE_REQ_MSG:							//receive message type5
 						recvClntmessage5(clnt_sock, &close_req);
-						msgtype=close_res_msg;
+						msgtype=CLOSE_RES_MSG;
 						break;
 				}
 				sendmsgtype(clnt_sock, &msgtype);
 				switch(msgtype)									//send message
 				{
-					case auth_res_msg:							//send message type1
+					case AUTH_RES_MSG:							//send message type1
 						setServmessage2(msgtype, &auth_res);
 						sendServmessage2(clnt_sock, &auth_res);
 						break;					
-					case sql_res_msg:							//send message tyoe3
+					case SQL_RES_MSG:							//send message tyoe3
 						setServmessage4(msgtype, &sql_req, &sql_res);
 						sendServmessage4(clnt_sock, &sql_res);
 						break;
-					case close_res_msg:							//send message type5
+					case CLOSE_RES_MSG:							//send message type5
 						setServmessage6(msgtype, &close_res);
 						sendServmessage6(clnt_sock, &close_res);
 						close(clnt_sock);

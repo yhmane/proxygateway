@@ -16,7 +16,7 @@
 
 void setClntmessage1(char *id, char *password, UB2 msgtype, dgt_auth_req_msg *auth_req)		//set msgtype1
 {
-	auth_req->msg_type=auth_req_msg;
+	auth_req->msg_type=AUTH_REQ_MSG;
 	memcpy(auth_req->user_id, id, strlen(id)+1);
 	memcpy(auth_req->password, password, strlen(id)+1);
 }
@@ -37,7 +37,7 @@ void recvServmessage2(int sock, dgt_auth_res_msg *auth_res)					//receive msgtyp
 void setClntmessage3(UB2 msgtype, UB4 sql_len, char *sql_text, dgt_sql_req_msg *sql_req)	//set msgtype3
 {
 	int i;
-	char t[1025];
+	char t[SQL_TEXT];
 	sql_req->msg_type=msgtype;
 	sql_req->sql_len = strlen(sql_text);
 	memcpy(sql_req->sql_text, sql_text, strlen(sql_text)+1);
@@ -45,13 +45,13 @@ void setClntmessage3(UB2 msgtype, UB4 sql_len, char *sql_text, dgt_sql_req_msg *
 	for(i =0; i<6;i++)
 		t[i]=sql_req->sql_text[i];
 	if((strcmp(t,"select") ==0) || (strcmp(t,"SELECT") ==0))
-		sql_req->sql_type=select;
+		sql_req->sql_type=SELECT;
 	else if((strcmp(t,"delete") ==0) || (strcmp(t,"DELETE") ==0))
-		sql_req->sql_type=delete;
+		sql_req->sql_type=DELETE;
 	else if((strcmp(t,"update") ==0) || (strcmp(t,"UPDATE") ==0))
-		sql_req->sql_type=update;
+		sql_req->sql_type=UPDATE;
 	else
-		sql_req->sql_type=sqlerror;
+		sql_req->sql_type=SQLERROR;
 }
 void sendClntmessage3(int sock, dgt_sql_req_msg *sql_req)					//send msgtype3
 {
@@ -69,7 +69,7 @@ void recvServmessage4(int sock, dgt_sql_res_msg *sql_res)					//receive msgtype4
 
 void setClntmessage5(UB2 msgtype, dgt_close_req_msg *close_req)					//set msgtype5
 {
-	close_req->msg_type=close_req_msg;
+	close_req->msg_type=CLOSE_REQ_MSG;
 }
 void sendClntmessage5(int sock, dgt_close_req_msg *close_req)					//send msgtype5
 {
