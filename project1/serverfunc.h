@@ -3,9 +3,9 @@
 //  tcp
 //
 //  Created by hwangyunho on 2017. 9. 18.
+//  last modified by hwangyunho on 2017. 9. 25.
 //  Copyright © 2017년 hwangyunho. All rights reserved.
 //
-
 
 #ifndef __HEADER_H_
 #include "header.h"
@@ -14,7 +14,6 @@
 #ifndef __SERVERFUNC_H_
 #define __SERVERFUNC_H_
 
-
 void read_childproc(int sig)
 {
         pid_t pid;
@@ -22,35 +21,35 @@ void read_childproc(int sig)
         pid=waitpid(-1, &status, WNOHANG);
         printf("removed proc id: %d \n", pid);
 }
-void recvClntmessage1(int clnt_sock, dgt_auth_req_msg *auth_req)                   //receive ServerMessage Type2 from server
+void recvClntmessage1(int clnt_sock, dgt_auth_req_msg *auth_req)                               //receive msgtype1 
 {
         checklen=recv(clnt_sock, auth_req,sizeof(*auth_req),0);
         if(checklen==-1)
                 error_handling("recv() error");
 }
 
-void setServmessage2(UB2 msgtype, dgt_auth_res_msg *auth_res)
+void setServmessage2(UB2 msgtype, dgt_auth_res_msg *auth_res)                                   //set msgtype2                   
 {
         char r2_msg[257]="================================\nConnection is Successful.\nServer IP :192.168.10.111\nServer Port : 1521\n================================\n";
         auth_res->msg_type=auth_res_msg ;
         auth_res->rtn_len=strlen(r2_msg);
         memcpy(auth_res->rtn_msg, r2_msg, strlen(r2_msg)+1);
 }
-void sendServmessage2(int clnt_sock, dgt_auth_res_msg *auth_res)
+void sendServmessage2(int clnt_sock, dgt_auth_res_msg *auth_res)                                //send msgtype2
 {   
         checklen=send(clnt_sock, auth_res, sizeof(*auth_res),0);
         if(checklen==-1)
                 error_handling("send() error");
 }
 
-void recvClntmessage3(int clnt_sock, dgt_sql_req_msg *sql_req)                 //receive ServerMessage Type2 from server
+void recvClntmessage3(int clnt_sock, dgt_sql_req_msg *sql_req)                                  //receive msgtype3
 {
         checklen=recv(clnt_sock, sql_req, sizeof(*sql_req),0);
         if(checklen==-1)
                 error_handling("recv() error");
 }
 
-void setServmessage4(UB2 msgtype, dgt_sql_req_msg *sql_req, dgt_sql_res_msg *sql_res)
+void setServmessage4(UB2 msgtype, dgt_sql_req_msg *sql_req, dgt_sql_res_msg *sql_res)           //set msgtype4
 {
         char sql1[]="Result : select sql is successful.\n";
         char sql2[]="Result : delete sql is successful.\n";
@@ -78,21 +77,21 @@ void setServmessage4(UB2 msgtype, dgt_sql_req_msg *sql_req, dgt_sql_res_msg *sql
         }
 }
 
-void sendServmessage4(int clnt_sock, dgt_sql_res_msg *sql_res)
+void sendServmessage4(int clnt_sock, dgt_sql_res_msg *sql_res)                                  //send msgtype4
 {   
         checklen=send(clnt_sock, sql_res, sizeof(*sql_res),0);
         if(checklen==-1)
                 error_handling("send() error");
 }
 
-void recvClntmessage5(int clnt_sock, dgt_close_req_msg *close_req)                 //receive ServerMessage Type2 from server
+void recvClntmessage5(int clnt_sock, dgt_close_req_msg *close_req)                              //receive msgtype5
 {
         checklen=recv(clnt_sock, close_req, sizeof(*close_req),0);
         if(checklen==-1)
                 error_handling("recv() error");
 }
 
-void setServmessage6(UB2 msgtype, dgt_close_res_msg *close_res)
+void setServmessage6(UB2 msgtype, dgt_close_res_msg *close_res)                                 //set msgtype6
 {
         char final[]="Server connection is closed\n";
         close_res->msg_type=close_res_msg;
@@ -100,7 +99,7 @@ void setServmessage6(UB2 msgtype, dgt_close_res_msg *close_res)
         memcpy(close_res->rtn_msg, final, strlen(final));
 }
 
-void sendServmessage6(int clnt_sock, dgt_close_res_msg *close_res)
+void sendServmessage6(int clnt_sock, dgt_close_res_msg *close_res)                              //send msgtype6
 {   
         checklen=send(clnt_sock, close_res, sizeof(*close_res),0);
         if(checklen==-1)
