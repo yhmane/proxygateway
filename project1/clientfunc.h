@@ -15,13 +15,13 @@
 
 void setClntmessage1(char *id, char *password, UB2 msgtype, dgt_auth_req_msg *auth_req)		//set msgtype1
 {
-    auth_req->msg_type=auth_req_msg;
-    memcpy(auth_req->user_id, id, strlen(id)+1);
-    memcpy(auth_req->password, password, strlen(id)+1);
+	auth_req->msg_type=auth_req_msg;
+	memcpy(auth_req->user_id, id, strlen(id)+1);
+	memcpy(auth_req->password, password, strlen(id)+1);
 }
 void sendClntmessage1(int sock, dgt_auth_req_msg *auth_req)					//send msgtype1
 {
-    checklen=send(sock, auth_req, sizeof(*auth_req),0);
+	checklen=send(sock, auth_req, sizeof(*auth_req),0);
 	if(checklen==-1)
 		error_handling("send() error");   
 }
@@ -37,24 +37,24 @@ void setClntmessage3(UB2 msgtype, UB4 sql_len, char *sql_text, dgt_sql_req_msg *
 {
 	int i;
 	char t[1025];
-    sql_req->msg_type=msgtype;
-    sql_req->sql_len = strlen(sql_text);
-    memcpy(sql_req->sql_text, sql_text, strlen(sql_text)+1);
+	sql_req->msg_type=msgtype;
+	sql_req->sql_len = strlen(sql_text);
+	memcpy(sql_req->sql_text, sql_text, strlen(sql_text)+1);
     
-    for(i =0; i<6;i++)
-        t[i]=sql_req->sql_text[i];
-    if((strcmp(t,"select") ==0) || (strcmp(t,"SELECT") ==0))
-        sql_req->sql_type=select;
-    else if((strcmp(t,"delete") ==0) || (strcmp(t,"DELETE") ==0))
-        sql_req->sql_type=delete;
-    else if((strcmp(t,"update") ==0) || (strcmp(t,"UPDATE") ==0))
-        sql_req->sql_type=update;
-    else
-        sql_req->sql_type=sqlerror;
+	for(i =0; i<6;i++)
+		t[i]=sql_req->sql_text[i];
+	if((strcmp(t,"select") ==0) || (strcmp(t,"SELECT") ==0))
+		sql_req->sql_type=select;
+	else if((strcmp(t,"delete") ==0) || (strcmp(t,"DELETE") ==0))
+		sql_req->sql_type=delete;
+	else if((strcmp(t,"update") ==0) || (strcmp(t,"UPDATE") ==0))
+		sql_req->sql_type=update;
+	else
+		sql_req->sql_type=sqlerror;
 }
 void sendClntmessage3(int sock, dgt_sql_req_msg *sql_req)			//send msgtype3
 {
-    checklen=send(sock, sql_req, sizeof(*sql_req),0);
+	checklen=send(sock, sql_req, sizeof(*sql_req),0);
 	if(checklen==-1)
 		error_handling("send() error");
 }
