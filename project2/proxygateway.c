@@ -71,21 +71,21 @@ int main(int argc, char *argv[])
 			while(1)
 			{
 				recvmsgtype(clnt_sock, &msgtype);
-				switch(msgtype)									//receive message from client
+				switch(msgtype)							//receive message from client
 				{			
-					case auth_req_msg:							//receive message type1 from client
+					case auth_req_msg:					//receive message type1 from client
 						recvClntmessage1(clnt_sock, &auth_req);
 						printf("Client Request Msg -> %s, %s\n", auth_req.user_id, auth_req.password);
 						sendmsgtype(sock, &msgtype);			//send message type1 to server
 						sendClntmessage1(sock, &auth_req);
-    					break;	
-					case sql_req_msg:							//receive message type3 from client
+						break;	
+					case sql_req_msg:					//receive message type3 from client
 						recvClntmessage3(clnt_sock, &sql_req);
 						printf("Client Request Msg -> %s\n", sql_req.sql_text);
 						sendmsgtype(sock, &msgtype);			//send message type3 to server
 						sendClntmessage3(sock, &sql_req);
 						break;
-					case close_req_msg:							//receive message type5 from client
+					case close_req_msg:					//receive message type5 from client
 						recvClntmessage5(clnt_sock, &close_req);
 						sendmsgtype(sock, &msgtype);			//send message type3 to server
 						sendClntmessage5(sock, &close_req);
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
 				}
 			
 				recvmsgtype(sock, &msgtype);
-				switch(msgtype)									//receive message from server
+				switch(msgtype)							//receive message from server
 				{
 					case auth_req_msg:					
 					case auth_res_msg:							
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 						sendServmessage4(clnt_sock, &sql_res);
 						break;		
 					case close_res_msg:							
-						recvServmessage6(sock,  &close_res);	//receive message type6 from server
+						recvServmessage6(sock,  &close_res);		//receive message type6 from server
 						printf("Server Response Msg -> %s", close_res.rtn_msg);
 						close(sock);
 						sendmsgtype(clnt_sock, &msgtype);		//send message type6 to client
