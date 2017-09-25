@@ -1,3 +1,5 @@
+12days 
+Date 17.09.18 ~ 17.09.29
 *Network project*
 
 -Project1 
