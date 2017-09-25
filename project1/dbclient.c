@@ -46,9 +46,9 @@ int main(int argc, char *argv[])
 				printf("ID : ");
    				scanf("%s", id);
   				printf("Password : ");
-    			scanf("%s", password);
-
-    			setClntmessage1(id, password, msgtype, &auth_req);
+				scanf("%s", password);
+				
+				setClntmessage1(id, password, msgtype, &auth_req);
 				sendmsgtype(sock, &msgtype);
 				sendClntmessage1(sock, &auth_req);
 				break;
