@@ -9,7 +9,7 @@ project1+ proxygateway
 Check the msg, print
 File: dbclient.c clientfunc.h dbserver.c serverfunc.h header.h proxygateway.c
 
--use terminal for compile option
+-Use terminal for compile option
 Ex) gcc a.c -I/../../ -o a
 I - Include option
 O - object file option
