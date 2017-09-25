@@ -7,7 +7,6 @@
 //  Copyright © 2017년 hwangyunho. All rights reserved.
 //
 
-
 #include "serverfunc.h"
 int main(int argc, char *argv[])
 {	
