@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 				{			
 					case auth_req_msg:							//receive message type1
 						recvClntmessage1(clnt_sock, &auth_req);
-    					strcpy(id, auth_req.user_id);
+						strcpy(id, auth_req.user_id);
   					 	strcpy(password, auth_req.password);
 
    						if((strcmp(id,"scott")==0) && (strcmp(password, "tiger")==0))
