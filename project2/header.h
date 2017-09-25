@@ -19,7 +19,6 @@
 #include <signal.h>
 #include <sys/wait.h>
 
-#define BUF_SIZE 1024
 #define UB2 unsigned short
 #define UB4 unsigned int
 #define SCHAR signed char
