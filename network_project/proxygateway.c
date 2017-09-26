@@ -75,13 +75,13 @@ int main(int argc, char *argv[])
 				recvmsgType(clnt_sock, &msgType);
 				if(msgType==EMPTY_MSG) {
 					close(clnt_sock);
-					sendmsgType(sock, &msgType);			//send message type1 to server
+					sendmsgType(sock, &msgType);				//send message type1 to server
 					sendClntmessage1(sock, &auth_req);
 					exit(1);
 				}
 				if(msgType==AUTH_RES_MSG) {
 					close(clnt_sock);
-					sendmsgType(sock, &msgType);			//send message type1 to server
+					sendmsgType(sock, &msgType);				//send message type1 to server
 					sendClntmessage3(sock, &sql_req);
 					exit(1);
 				}
