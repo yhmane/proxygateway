@@ -15,6 +15,6 @@
 #define __COMMONFUNC_H_
 
 void error_handling(char *message);
-void sendmsgType(int sock, UB2 *msgtype);				//send msgtype just UB2
-void recvmsgType(int sock, UB2 *msgtype);				//send msgtype just UB2
+void sendmsgType(int sock, UB2 *msgType);				//send msgtype just UB2
+void recvmsgType(int sock, UB2 *msgType);				//send msgtype just UB2
 #endif
