@@ -4,14 +4,30 @@ Date 17.09.18 ~ 17.09.29
 
 -Project1 
 Make Simple DB Client & Simple DB Server
-File: dbclient.c clientfunc.h dbserver.c serverfunc.h header.h
+File: header.h 
+      dbserver.c dbserver.o
+      dbclient.c dbclient.o
+      commonfunc.c commonfunc.h commonfunc.o
+      clientfunc.c clientfunc.h clientfunc.o 
+      serverfunc.c serverfunc.h serverfunc.o
+
 
 -Project2
 project1+ proxygateway
 Check the msg, print
-File: dbclient.c clientfunc.h dbserver.c serverfunc.h header.h proxygateway.c
+File: header.h 
+      dbserver.c dbserver.o
+      dbclient.c dbclient.o
+      proxygateway.c proxygateway.p
+      commonfunc.c commonfunc.h commonfunc.o
+      clientfunc.c clientfunc.h clientfunc.o 
+      serverfunc.c serverfunc.h serverfunc.o
 
--Use terminal for compile option
-Ex) gcc a.c -I/../../ -o a
-I - Include option
-O - object file option
+
+
+-Use gcc option for compile
+step1) make obj file
+gcc -c xxxx.c  => xxxx.o
+gcc -c aaaa.c  => aaaa.o
+step2) make exe file
+gcc -o main xxxx.o aaaa.o => main.exe
