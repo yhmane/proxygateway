@@ -1,0 +1,88 @@
+11:28:42 **** Build of configuration Debug for project network ****
+make all 
+Building file: ../clientfunc.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"clientfunc.d" -MT"clientfunc.o" -o "clientfunc.o" "../clientfunc.c"
+Finished building: ../clientfunc.c
+ 
+Building file: ../commonfunc.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"commonfunc.d" -MT"commonfunc.o" -o "commonfunc.o" "../commonfunc.c"
+Finished building: ../commonfunc.c
+ 
+Building file: ../dbclient.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"dbclient.d" -MT"dbclient.o" -o "dbclient.o" "../dbclient.c"
+Finished building: ../dbclient.c
+ 
+Building file: ../dbserver.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"dbserver.d" -MT"dbserver.o" -o "dbserver.o" "../dbserver.c"
+../dbserver.c:82:18: warning: passing 'signed char [33]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+                                                strcpy(id, auth_req.user_id);
+                                                           ^~~~~~~~~~~~~~~~
+/usr/include/secure/_string.h:83:33: note: expanded from macro 'strcpy'
+  __builtin___strcpy_chk (dest, src, __darwin_obsz (dest))
+                                ^~~
+../dbserver.c:83:27: warning: passing 'signed char [33]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+                                                strcpy(password, auth_req.password);
+                                                                 ^~~~~~~~~~~~~~~~~
+/usr/include/secure/_string.h:83:33: note: expanded from macro 'strcpy'
+  __builtin___strcpy_chk (dest, src, __darwin_obsz (dest))
+                                ^~~
+2 warnings generated.
+Finished building: ../dbserver.c
+ 
+Building file: ../proxygateway.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"proxygateway.d" -MT"proxygateway.o" -o "proxygateway.o" "../proxygateway.c"
+../proxygateway.c:16:7: warning: unused variable 'id' [-Wunused-variable]
+        char id[USERID], password[PASSWORD];
+             ^
+../proxygateway.c:16:19: warning: unused variable 'password' [-Wunused-variable]
+        char id[USERID], password[PASSWORD];
+                         ^
+2 warnings generated.
+Finished building: ../proxygateway.c
+ 
+Building file: ../serverfunc.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"serverfunc.d" -MT"serverfunc.o" -o "serverfunc.o" "../serverfunc.c"
+Finished building: ../serverfunc.c
+ 
+Building target: network
+Invoking: MacOS X C Linker
+gcc  -o "network"  ./clientfunc.o ./commonfunc.o ./dbclient.o ./dbserver.o ./proxygateway.o ./serverfunc.o   
+duplicate symbol _main in:
+    ./dbserver.o
+    ./proxygateway.o
+ld: 1 duplicate symbol for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [network] Error 1
+11:28:45 **** Incremental Build of configuration Debug for project network ****
+make all 
+Building target: network
+Invoking: MacOS X C Linker
+gcc  -o "network"  ./clientfunc.o ./commonfunc.o ./dbclient.o ./dbserver.o ./proxygateway.o ./serverfunc.o   
+duplicate symbol _main in:
+    ./dbserver.o
+    ./proxygateway.o
+ld: 1 duplicate symbol for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [network] Error 1
+11:29:59 **** Incremental Build of configuration Debug for project network ****
+make all 
+Building file: ../commonfunc.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"commonfunc.d" -MT"commonfunc.o" -o "commonfunc.o" "../commonfunc.c"
+Finished building: ../commonfunc.c
+ 
+Building target: network
+Invoking: MacOS X C Linker
+gcc  -o "network"  ./clientfunc.o ./commonfunc.o ./dbclient.o ./dbserver.o ./proxygateway.o ./serverfunc.o   
+duplicate symbol _main in:
+    ./dbserver.o
+    ./proxygateway.o
+ld: 1 duplicate symbol for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [network] Error 1

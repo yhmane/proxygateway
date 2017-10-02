@@ -1,0 +1,19 @@
+11:29:59 **** Incremental Build of configuration Debug for project network ****
+make all 
+Building file: ../commonfunc.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"commonfunc.d" -MT"commonfunc.o" -o "commonfunc.o" "../commonfunc.c"
+Finished building: ../commonfunc.c
+ 
+Building target: network
+Invoking: MacOS X C Linker
+gcc  -o "network"  ./clientfunc.o ./commonfunc.o ./dbclient.o ./dbserver.o ./proxygateway.o ./serverfunc.o   
+duplicate symbol _main in:
+    ./dbserver.o
+    ./proxygateway.o
+ld: 1 duplicate symbol for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [network] Error 1
+
+11:30:00 Build Finished (took 179ms)
+
