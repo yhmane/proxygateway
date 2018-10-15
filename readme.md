@@ -2,9 +2,9 @@
 **It is about proxygateway at Client, Server (just sample project)**
 
 ### Project1 
-**Make Simple DB Client & Simple DB Server**
+>Make Simple DB Client & Simple DB Server
 
->File: 
+File: 
       header.h
       dbserver.c dbserver.o
       dbclient.c dbclient.o
