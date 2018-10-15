@@ -14,21 +14,15 @@ File:
 
 
 # Project2
-**project1+ oxygateway**
+>project1+ proxygateway
 Check the msg, print
 
 File: header.h 
-
       dbserver.c dbserver.o
-      
       dbclient.c dbclient.o
-      
       proxygateway.c proxygateway.p
-      
       commonfunc.c commonfunc.h commonfunc.o
-      
       clientfunc.c clientfunc.h clientfunc.o 
-      
       serverfunc.c serverfunc.h serverfunc.o
 
 
