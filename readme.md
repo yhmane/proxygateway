@@ -3,12 +3,12 @@
 
 ### Project1 
 **Make Simple DB Client & Simple DB Server**
-`File: header.h `
-      `dbserver.c dbserver.o`
-      `dbclient.c dbclient.o`
-      `commonfunc.c commonfunc.h commonfunc.o`
-      `clientfunc.c clientfunc.h clientfunc.o `
-      `serverfunc.c serverfunc.h serv-erfunc.o`
+File: header.h
+      dbserver.c dbserver.o
+      dbclient.c dbclient.o
+      commonfunc.c commonfunc.h commonfunc.o
+      clientfunc.c clientfunc.h clientfunc.o
+      serverfunc.c serverfunc.h serv-erfunc.o
 
 
 # Project2
